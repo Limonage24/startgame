@@ -1,0 +1,23 @@
+<% if flash.any? %>
+  <% flash.each do |type, msg| %>
+    <% if type == 'alert' %>
+      <div class="alert alert-danger" role="alert">
+        <%= msg %>
+      </div>
+    <% else %>
+      <div class="alert alert-success" role="alert">
+        <%= msg %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h1>Инфакт</h1>
+
+    <% @posts.each do |post| %>
+      <div class="border-bottom" id="index_div">
+        <h4><%= post.title %></h4>
+        <p><%= post.text.scan(/^(<text>|<img>)(.+)(<\/text>|<\/img>)$/).first&.second %></p>
+        <%= button_to 'Читать далее', post, method: :get, class: 'btn btn-my' %> <br/>
+      </div>
+    <% end %>

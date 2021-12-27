@@ -1,0 +1,53 @@
+<%= form_with model: post, id: "new_form" do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <h4><%= form.label :title, 'Заголовок:' %></h4>
+    <%= form.text_field :title, value: post.title %>
+  </div>
+
+  <div class="text_div">
+    <h4><%= form.label :text, 'Текст:' %></h4>
+    <%# p post %>
+    <% if post.title.nil? || post.text.nil?|| post.title&.empty?  || post.text&.empty? %>
+    <div class="field">
+      <%= form.text_area :text, class: 'text_txt', name: 'text[]', value: "" %>
+    </div>
+    <% else %>
+      <% post.text.scan(/^(<text>|<img>)(.+)(<\/text>|<\/img>)$/).each do |el| %>
+        <div class="field">
+        <% if el.first == '<text>' %>
+          <%= form.text_area :text, class: 'text_txt', name: 'text[]', value: el.second %> <br/>
+        <% else %>
+          <p>Пожалуйста, введите URL картинки, которую вы хотите вставить:</p>
+          <%= form.url_field :text, name: 'text[]', value: el.second %> <br/>
+        <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div> <br/>
+  <div class="actions">
+    <%= form.submit 'Принять', class: 'btn btn-my'%>
+  </div>
+<% end %>
+<p>Доступные функции:</p>
+<div class="btn-toolbar border w-auto" role="toolbar" aria-label="Toolbar with button groups">
+      <%= button_to "Добавить поле для текста", add_posts_url, remote: true,
+                    method: :get, form: {id: 'add_txt_btn'},
+                    class: 'btn btn-my' %>
+      &nbsp;
+      <%= button_to "Добавить картинку",add_posts_url, remote: true,
+                    method: :get, form: {id: 'add_img_btn'},
+                    class: 'btn btn-my' %>
+</div> <br/>
+

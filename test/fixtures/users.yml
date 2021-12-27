@@ -1,0 +1,18 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  avatar: NULL
+  username: user1
+  role: NULL
+  password_digest: $2a$12$8Bpu6hKRT97j.Jj/34kGJOocbfU/vDUMBPl3eW3vzG/yNfW57nU5a
+
+two:
+  avatar: NULL
+  username: 'user2'
+  role: NULL
+  password_digest: '$2a$12$hb7J7RTgKofkYn/FN4cJnuZYQJ237sbgqOVTjUxsH94Cx31Zr3yeS'
+admin:
+  avatar: 'https://img5.goodfon.ru/wallpaper/nbig/3/73/abstraktsiia-antisfera-vodovorot-krasok-kartinka-chernyi-fon.jpg'
+  username: 'admin'
+  role: 'admin'
+  password_digest: '$2a$12$J/rl7pyKV5UuW7sYXhSe9e0Rc3U1BqzX1caMyF6xjAFq/OKvoU.I6'

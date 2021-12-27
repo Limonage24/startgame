@@ -1,0 +1,13 @@
+// Place all the styles related to the Users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+table {
+  word-break: break-word;
+  border-bottom: black;
+  border-width: 1px;
+}
+form#user_form, div.user_field, div.user_actions {
+  text-align: left;
+  padding-left: 25%;
+}

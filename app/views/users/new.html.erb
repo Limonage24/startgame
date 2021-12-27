@@ -1,0 +1,18 @@
+<h1>Регистрация</h1>
+
+<% if flash.any? %>
+  <% flash.each do |type, msg| %>
+    <% if type == 'alert' %>
+      <div class="alert alert-danger" role="alert">
+        <%= msg %>
+      </div>
+    <% else %>
+      <div class="alert alert-success" role="alert">
+        <%= msg %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= render 'form', user: @user %>
+

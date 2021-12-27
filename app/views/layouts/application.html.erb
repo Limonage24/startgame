@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Startgame</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark my-primary">
+      <a class="navbar-brand" id="nav_header" href="/posts/">
+        <%= image_tag "logo.png", height: 40, width: 40, class: "d-inline-block align-center" %>
+        Startgame</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link active nav_text" href="/posts/">На главную</a>
+      </ul>
+      <% if !signed_in? %>
+        <%= form_with url: session_create_url, method: :get, class: "form-inline ms-auto" do |f| %>
+          <%= f.button 'Войти', class: 'btn btn-my', formaction: session_login_url %>
+          <%= f.button 'Зарегистрироваться', class: 'btn btn-my', formaction: new_user_url %>
+          <% end %>
+        <% else %>
+          <%= form_with url: @current_user, method: :get, class: "form-inline ms-auto" do |f| %>
+            <%= f.button 'Мой аккаунт', class: 'btn btn-my'%>
+            <%= f.button 'Выйти', class: 'btn btn-my', formaction: session_logout_url %>
+          <% end %>
+        <% end %>
+        <!--<form class="form-inline ms-auto">
+          <button class="btn btn-outline-success nav-btn" type="submit">Search</button>
+        </form>-->
+    </nav>
+  </header>
+    <%= yield %>
+  </body>
+</html>

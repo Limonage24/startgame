@@ -1,0 +1,47 @@
+<% if flash.any? %>
+  <% flash.each do |type, msg| %>
+    <% if type == 'alert' %>
+      <div class="alert alert-danger" role="alert">
+        <%= msg %>
+      </div>
+    <% else %>
+      <div class="alert alert-success" role="alert">
+        <%= msg %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<p><h4><%= @post.title %></h4></p>
+
+<p>
+  <% txt = @post.text.scan(/^(<text>|<img>)(.+)(<\/text>|<\/img>)$/) %>
+  <% txt.each do |el| %>
+    <% if el.first == '<text>' %>
+    <p><%= el.second %> </p><br/>
+    <% else %>
+      <%= image_tag el.second, class: 'txt_img' %>
+    <% end %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Автор:</strong>
+  <% if @author.nil? %>
+    Неизвестно
+  <% else %>
+    <% avatar = @author.avatar.nil? || @author.avatar&.empty? ? "no_avatar.png" : @author.avatar %>
+    <%= image_tag avatar, height: 30, width: 30 %>
+    <%= @author.username %>
+  <% end %>
+</p>
+
+<div class="btn-group" role="group" aria-label="Toolbar with button groups">
+<% if (!@author.nil? && current_user&.id == @author&.id) || current_user&.role == 'admin' %>
+  <%= button_to 'Редактировать', edit_post_path(@post), method: :get, class: 'btn btn-my', id: 'edit_btn'  %>
+    &nbsp;
+  <%= button_to 'Удалить', post_path(@post), method: :delete, class: 'btn btn-my', data: { confirm: 'Are you sure?' }  %>
+    &nbsp;
+<% end %>
+<%= button_to 'На главную', root_url, method: :get, class: 'btn btn-my'  %>
+</div>

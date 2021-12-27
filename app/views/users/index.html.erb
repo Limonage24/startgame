@@ -1,0 +1,35 @@
+<% if flash.any? %>
+  <% flash.each do |type, msg| %>
+    <% if type == 'alert' %>
+      <div class="alert alert-danger" role="alert">
+        <%= msg %>
+      </div>
+    <% else %>
+      <div class="alert alert-success" role="alert">
+        <%= msg %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h1>Список пользователей</h1>
+
+<table class="table table-bordered w-auto">
+  <thead>
+    <tr>
+      <th>Аватар</th>
+      <th>Имя пользователя</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <% avatar = @user.nil? || @user.avatar&.empty? ? "no_avatar.png" : @user.avatar %>
+        <td><%= image_tag avatar, height: 35, width: 35, class: "d-inline-block align-center" %></td>
+        <td><%= user.username %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

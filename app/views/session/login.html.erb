@@ -1,0 +1,23 @@
+<h1>Войти в систему</h1>
+
+<% if flash.any? %>
+  <% flash.each do |type, msg| %>
+    <% if type == 'alert' %>
+    <div class="alert alert-danger" role="alert">
+      <%= msg %>
+    </div>
+    <% else %>
+      <div class="alert alert-success" role="alert">
+        <%= msg %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= form_with url: session_create_url, method: :get, id: 'sign_in_form' do |f| %>
+  <%= f.label :login, 'Логин:' %> <br/>
+  <%= f.text_field :login, required: true, label: 'Login', id: 'session_input' %> <br/> <br/>
+  <%= f.label :password, 'Пароль:' %> <br/>
+  <%= f.password_field :password, required: true, label: 'Password' %> <br/> <br/>
+  <%= f.button 'Войти', class: 'btn btn-my2', id: 'login_btn' %> <br/>
+<% end %>

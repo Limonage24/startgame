@@ -1,0 +1,12 @@
+// Place all the styles related to the Session controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+input#session_input, input[type='password'],
+input#username_field, input#avatar_field {
+  width: initial;
+  font-weight: normal;
+}
+form#sign_in_form {
+  padding: 15px;
+}

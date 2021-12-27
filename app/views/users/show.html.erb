@@ -1,0 +1,59 @@
+<% if flash.any? %>
+  <% flash.each do |type, msg| %>
+    <% if type == 'alert' %>
+      <div class="alert alert-danger" role="alert">
+        <%= msg %>
+      </div>
+    <% else %>
+      <div class="alert alert-success" role="alert">
+        <%= msg %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<div class="mx-auto w-auto center">
+<p>
+  <% avatar = @user.avatar.nil? || @user.avatar&.empty? ? "no_avatar.png" : @user.avatar %>
+  <%= image_tag avatar, height: 100, width: 100, class: "d-inline-block align-center" %>
+</p>
+
+  <div>
+  <h4><%= @user.username %></h4>
+  <div class="btn-group" role="group" aria-label="Toolbar with button groups">
+    <%= button_to 'Редактировать профиль', edit_user_path(@user), method: :get, class: 'btn btn-my btn-sm' %>
+    &nbsp;
+    <%= button_to 'Удалить профиль', user_path(@user), method: :delete, class: 'btn btn-my btn-sm', id: 'del_btn', data: { confirm: 'Are you sure?' } %>
+    <% if @user.role == 'admin' %>
+      &nbsp;
+      <%= button_to 'Список пользователей', users_url, method: :get, class: 'btn btn-my btn-sm' %>
+    <% end %>
+  </div>
+  </div>
+<br/>
+<div>
+  <% if @posts&.any? %>
+    <h4>Ваши посты:</h4> <br/>
+    <table class="table w-auto mx-auto">
+    <% @posts.each do |post|  %>
+    <tr>
+      <td><h5><%= post.title %></h5></td>
+      <td>
+    <div class="btn-group" role="group" aria-label="Toolbar with button groups">
+      <%= button_to 'Редактировать', edit_post_path(post), method: :get, class: 'btn btn-my btn-sm' %>
+      <span> &nbsp;</span>
+      <%= button_to 'Удалить', post_path(post), method: :delete, class: 'btn btn-my btn-sm', name: 'del_post_btn', data: { confirm: 'Are you sure?' } %>
+    </div>
+      </td>
+    </tr>
+    <% end %>
+    </table>
+  <% else %>
+    <p>You don't have any posts yet</p>
+  <% end %>
+</div>
+  <p>
+    <%= button_to 'Создать новый пост', new_post_url, method: :get, class: 'btn btn-my' %>
+  </p>
+</div>
+
