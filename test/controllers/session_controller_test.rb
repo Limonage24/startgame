@@ -10,11 +10,4 @@ class SessionControllerTest < ActionDispatch::IntegrationTest
     get session_create_url
     assert_response :redirect
   end
-
-=begin
-  test "should get logout" do
-    get session_logout_url
-    assert_response :success
-  end
-=end
 end

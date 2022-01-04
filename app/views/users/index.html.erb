@@ -25,7 +25,7 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <% avatar = @user.nil? || @user.avatar&.empty? ? "no_avatar.png" : @user.avatar %>
+        <% avatar = user.avatar&.empty? ? "no_avatar.png" : user.avatar %>
         <td><%= image_tag avatar, height: 35, width: 35, class: "d-inline-block align-center" %></td>
         <td><%= user.username %></td>
       </tr>

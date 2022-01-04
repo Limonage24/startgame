@@ -1,6 +1,5 @@
-include SessionHelper
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[show edit update destroy]
   skip_before_action :require_login, only: %i[index show]
   before_action :author_or_admin, only: %i[edit destroy update]
 
@@ -10,8 +9,7 @@ class PostsController < ApplicationController
   end
 
   # GET /posts/1 or /posts/1.json
-  def show
-  end
+  def show; end
 
   # GET /posts/new
   def new
@@ -19,8 +17,7 @@ class PostsController < ApplicationController
   end
 
   # GET /posts/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /posts or /posts.json
   def create
@@ -29,7 +26,7 @@ class PostsController < ApplicationController
     can_save = !@post.title&.empty? && !@post.text&.empty?
     respond_to do |format|
       if can_save && @post.save
-        format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
+        format.html { redirect_to post_url(@post), notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new, status: :unprocessable_entity, alert: 'Empty title or text field' }
@@ -43,7 +40,7 @@ class PostsController < ApplicationController
     can_save = !post_params[:title]&.empty? && !post_params[:text]&.empty? && is_author_or_admin?
     respond_to do |format|
       if can_save && @post.update(post_params)
-        format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
+        format.html { redirect_to post_url(@post), notice: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -57,7 +54,7 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
+      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -69,13 +66,14 @@ class PostsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
+  # Use callbacks to share common setup or constraints between actions.
   def set_post
     @post = Post.find(params[:id])
     @author = @post.author.nil? ? nil : User.find(@post.author)
   end
 
-    # Only allow a list of trusted parameters through.
+  # Only allow a list of trusted parameters through.
   def post_params
     par = params.require(:post).permit(:title)
     txt = params.require(:text).map do |str|
@@ -89,16 +87,14 @@ class PostsController < ApplicationController
     end
                 .join('')
     params = ActionController::Parameters.new(post: {
-      title: par[:title],
-      text: txt
-    })
+                                                title: par[:title],
+                                                text: txt
+                                              })
     params.require(:post).permit(:title, :text)
   end
 
   def author_or_admin
-    unless @current_user.id == @post&.author || @current_user&.role == 'admin'
-      redirect_to root_url
-    end
+    redirect_to root_url unless @current_user.id == @post&.author || @current_user&.role == 'admin'
   end
 
   def is_author_or_admin?
